@@ -3,7 +3,7 @@ import os
 import cv2
 
 
-filename = 'video.avi'
+filename = 'video-gray.avi'
 frames_per_second = 24.0
 res = '720p'
 
@@ -56,6 +56,7 @@ out = cv2.VideoWriter(filename, get_video_type(filename), 25, get_dims(cap, res)
 
 while True:
     ret, frame = cap.read()
+    
     out.write(frame)
     cv2.imshow('frame',frame)
     if cv2.waitKey(1) & 0xFF == ord('q'):
