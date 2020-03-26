@@ -22,7 +22,7 @@ for root,dirs,files in os.walk(image_dir):
                 label_ids[label] = current_id
                 current_id+=1
             id_ = label_ids[label]
-            print(label_ids)
+            #print(label_ids)
             #y_labels.append(label)
             #x_train.append(path)
             pil_image = Image.open(path).convert("L") #grayscale
@@ -35,8 +35,8 @@ for root,dirs,files in os.walk(image_dir):
                 x_train.append(roi)
                 y_labels.append(id_)
 
-print(x_train)
-print(y_labels)
+#print(x_train)
+#print(y_labels)
 
 '''import cv2
 import os
