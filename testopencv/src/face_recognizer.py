@@ -1,14 +1,16 @@
 import cv2
 import numpy as np
 import os 
+from face_trainer import ids
 recognizer = cv2.face.LBPHFaceRecognizer_create()
 recognizer.read('trainer/trainer.yml')
 cascadePath = 'cascades/data/haarcascade_frontalface_default.xml'
 faceCascade = cv2.CascadeClassifier(cascadePath);
 font = cv2.FONT_HERSHEY_SIMPLEX#iniciate id counter
 id = 0# names related to ids: example ==> Marcelo: id=1,  etc
-names = ['None', 'id1', 'id2', 'id1', 'id4'] # Initialize and start realtime video capture
-list_len = len(names)-1
+names = np.unique(ids) # Initialize and start realtime video capture
+print(names)
+list_len = len(names)
 cam = cv2.VideoCapture(0)
 #cam.set(3, 640) # set video widht
 #cam.set(4, 480) # set video height# Define min window size to be recognized as a face
@@ -26,20 +28,20 @@ while True:
         id, confidence = recognizer.predict(gray[y:y+h,x:x+w])
                 # If confidence is less them 100 ==> "0" : perfect match 
         if (confidence < 100):
-            id = names[id]
+            idb = names[id]+2
             confidence = "  {0}%".format(round(100 - confidence))
         else:
             count+=1
-            id = "unknown"
+            idb = "unknown"
             cv2.imwrite("dataset/Unkown." + str(list_len + 1) + '.' +  
                     str(count) + ".jpg", gray[y:y+h,x:x+w])
             cv2.imshow('image', img)
-            names.append('id'+ str(list_len+1))
+            #names.append('id'+ str(list_len+1))
             confidence = "  {0}%".format(round(100 - confidence))
         
         cv2.putText(
                     img, 
-                    str(id), 
+                    str(idb), 
                     (x+5,y-5), 
                     font, 
                     1, 
